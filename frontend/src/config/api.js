@@ -76,6 +76,23 @@ export const api = {
 
     return response.json();
   },
+
+  togglePublish: async (id, isPublished) => {
+    const response = await fetch(`${API_URL}/api/outfits/${id}/publish`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ is_published: isPublished }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to toggle publish status');
+    }
+
+    return response.json();
+  },
 };
 
 export default api;

@@ -39,6 +39,23 @@ const OutfitGallery = () => {
     }
   };
 
+  const handleTogglePublish = async (id, currentStatus) => {
+    try {
+      const newStatus = !currentStatus;
+      await api.togglePublish(id, newStatus);
+
+      // Update local state
+      setOutfits(outfits.map(outfit =>
+        outfit.id === id
+          ? { ...outfit, is_published: newStatus }
+          : outfit
+      ));
+    } catch (err) {
+      console.error('Error toggling publish status:', err);
+      alert('Failed to toggle publish status: ' + err.message);
+    }
+  };
+
   if (loading) {
     return (
       <div className="gallery-container">
@@ -106,6 +123,11 @@ const OutfitGallery = () => {
                   <span className="product-count">
                     {outfit.products?.length || 0} product{outfit.products?.length !== 1 ? 's' : ''}
                   </span>
+                  {outfit.is_published && (
+                    <span className="template-badge" style={{ background: '#d4edda', color: '#155724' }}>
+                      ✓ Published
+                    </span>
+                  )}
                 </div>
 
                 <div className="outfit-products">
@@ -137,6 +159,13 @@ const OutfitGallery = () => {
                 </div>
 
                 <div className="outfit-actions">
+                  <button
+                    onClick={() => handleTogglePublish(outfit.id, outfit.is_published)}
+                    className={outfit.is_published ? "btn-secondary btn-small" : "btn-primary btn-small"}
+                    title={outfit.is_published ? "Unpublish from SaaS" : "Publish to SaaS"}
+                  >
+                    {outfit.is_published ? '◯ Unpublish' : '✓ Publish'}
+                  </button>
                   <button
                     onClick={() => navigate(`/edit/${outfit.id}`)}
                     className="btn-secondary btn-small"

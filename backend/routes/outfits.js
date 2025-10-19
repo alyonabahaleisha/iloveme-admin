@@ -190,6 +190,36 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// Toggle publish status
+router.patch('/:id/publish', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { is_published } = req.body;
+
+    // Update publish status
+    const { data: outfit, error } = await supabase
+      .from('outfits')
+      .update({ is_published })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    res.json({
+      success: true,
+      outfit,
+      message: is_published ? 'Outfit published successfully' : 'Outfit unpublished successfully'
+    });
+  } catch (error) {
+    console.error('Error toggling publish status:', error);
+    res.status(500).json({
+      error: 'Failed to toggle publish status',
+      message: error.message
+    });
+  }
+});
+
 // Delete outfit
 router.delete('/:id', async (req, res) => {
   try {
