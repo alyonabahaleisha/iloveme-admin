@@ -503,6 +503,24 @@ body {
   white-space: nowrap;
 }
 
+.gender-badge {
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.gender-badge.gender-woman {
+  background: #fce7f3;
+  color: #be185d;
+}
+
+.gender-badge.gender-man {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
 .outfit-products {
   display: flex;
   gap: 8px;
@@ -799,6 +817,51 @@ body {
   background: #f5f5f5;
   cursor: not-allowed;
   opacity: 0.7;
+}
+
+/* Gender Switch */
+.gender-switch {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.gender-option {
+  flex: 1;
+  padding: 12px 20px;
+  border: 2px solid #ddd;
+  background: white;
+  color: #666;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 44px;
+}
+
+@media (min-width: 768px) {
+  .gender-option {
+    padding: 10px 20px;
+    font-size: 14px;
+    min-height: auto;
+  }
+}
+
+.gender-option:hover:not(:disabled) {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.gender-option.active {
+  background: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+.gender-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* Image Upload */

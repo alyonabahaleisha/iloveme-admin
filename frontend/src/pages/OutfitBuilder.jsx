@@ -15,6 +15,7 @@ const OutfitBuilder = () => {
   const [template, setTemplate] = useState('full_outfit');
   const [outfitName, setOutfitName] = useState('');
   const [outfitDescription, setOutfitDescription] = useState('');
+  const [gender, setGender] = useState('woman');
   const [canvasData, setCanvasData] = useState({ products: [] });
   const [saving, setSaving] = useState(false);
   const [exporting, setExporting] = useState(false);
@@ -36,6 +37,7 @@ const OutfitBuilder = () => {
       setOutfitName(outfit.name || '');
       setOutfitDescription(outfit.description || '');
       setTemplate(outfit.template_type || 'full_outfit');
+      setGender(outfit.gender || 'woman');
 
       // Transform products from database format to component format
       const loadedProducts = outfit.products.map(p => ({
@@ -222,6 +224,7 @@ const OutfitBuilder = () => {
         combined_image_url: combinedImageUrl,
         canvas_width: CANVAS_WIDTH,
         canvas_height: CANVAS_HEIGHT,
+        gender: gender,
         products: mergedProducts,
       };
 
@@ -292,6 +295,28 @@ const OutfitBuilder = () => {
                 rows="3"
                 disabled={saving}
               />
+            </div>
+
+            <div className="form-group">
+              <label>Gender</label>
+              <div className="gender-switch">
+                <button
+                  type="button"
+                  className={`gender-option ${gender === 'woman' ? 'active' : ''}`}
+                  onClick={() => setGender('woman')}
+                  disabled={saving}
+                >
+                  Woman
+                </button>
+                <button
+                  type="button"
+                  className={`gender-option ${gender === 'man' ? 'active' : ''}`}
+                  onClick={() => setGender('man')}
+                  disabled={saving}
+                >
+                  Man
+                </button>
+              </div>
             </div>
           </div>
 

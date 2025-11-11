@@ -120,6 +120,9 @@ const OutfitGallery = () => {
 
                 <div className="outfit-meta">
                   <span className="template-badge">{outfit.template_type}</span>
+                  <span className={`gender-badge ${outfit.gender === 'man' ? 'gender-man' : 'gender-woman'}`}>
+                    {outfit.gender === 'man' ? '♂ Man' : '♀ Woman'}
+                  </span>
                   <span className="product-count">
                     {outfit.products?.length || 0} product{outfit.products?.length !== 1 ? 's' : ''}
                   </span>
