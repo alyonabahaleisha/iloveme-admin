@@ -8,7 +8,7 @@ services:
     branch: main
     rootDir: backend
     buildCommand: npm install
-    startCommand: node server.js
+    startCommand: node index.js
     envVars:
       - key: PORT
         value: 5000
@@ -16,7 +16,7 @@ services:
         value: production
       - key: BG_REMOVAL_SERVICE_URL
         value: https://ilovme-admin-bg-removal.onrender.com
-    healthCheckPath: /
+    healthCheckPath: /health
     autoDeploy: true
 
   # Background Removal Service (Python + Flask)
@@ -28,11 +28,11 @@ services:
     branch: main
     rootDir: backend
     buildCommand: pip install -r requirements.txt
-    startCommand: python bg_removal_service.py
+    startCommand: python3 bg_removal_service.py
     envVars:
       - key: PORT
         value: 5001
       - key: FLASK_ENV
         value: production
-    healthCheckPath: /
+    healthCheckPath: /health
     autoDeploy: true
