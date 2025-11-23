@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const outfitRoutes = require('./routes/outfits');
 const uploadRoutes = require('./routes/upload');
+const feedbackRoutes = require('./routes/feedback');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -25,6 +26,7 @@ if (!fs.existsSync(uploadsDir)) {
 // Routes
 app.use('/api/upload', uploadRoutes);
 app.use('/api/outfits', outfitRoutes);
+app.use('/api/feedback', feedbackRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

@@ -93,6 +93,25 @@ export const api = {
 
     return response.json();
   },
+
+  getFeedback: async () => {
+    const response = await fetch(`${API_URL}/api/feedback`);
+    if (!response.ok) throw new Error('Failed to fetch feedback');
+    return response.json();
+  },
+
+  deleteFeedback: async (id) => {
+    const response = await fetch(`${API_URL}/api/feedback/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to delete feedback');
+    }
+
+    return response.json();
+  },
 };
 
 export default api;

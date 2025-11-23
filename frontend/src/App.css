@@ -1299,3 +1299,114 @@ body {
     border-bottom: 2px solid #eee;
   }
 }
+
+/* Feedback Viewer */
+.feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .feedback-list {
+    gap: 20px;
+  }
+}
+
+.feedback-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+@media (min-width: 768px) {
+  .feedback-card {
+    padding: 24px;
+  }
+}
+
+.feedback-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: #d0d0d0;
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.feedback-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .feedback-meta {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.feedback-email {
+  font-weight: 600;
+  color: #333;
+  font-size: 15px;
+  word-break: break-word;
+}
+
+@media (min-width: 768px) {
+  .feedback-email {
+    font-size: 16px;
+  }
+}
+
+.feedback-date {
+  color: #666;
+  font-size: 13px;
+}
+
+@media (min-width: 768px) {
+  .feedback-date {
+    font-size: 14px;
+  }
+}
+
+.feedback-message {
+  color: #333;
+  line-height: 1.6;
+  font-size: 15px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: 12px;
+}
+
+@media (min-width: 768px) {
+  .feedback-message {
+    font-size: 16px;
+  }
+}
+
+.feedback-footer {
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.feedback-user-id {
+  color: #999;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+}
+
+@media (min-width: 768px) {
+  .feedback-user-id {
+    font-size: 13px;
+  }
+}

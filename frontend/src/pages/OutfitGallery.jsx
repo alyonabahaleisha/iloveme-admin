@@ -87,9 +87,14 @@ const OutfitGallery = () => {
           <h1>Outfit Gallery</h1>
           <p className="subtitle">{outfits.length} outfit{outfits.length !== 1 ? 's' : ''} created</p>
         </div>
-        <button onClick={() => navigate('/create')} className="btn-primary">
-          + Create New Outfit
-        </button>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <button onClick={() => navigate('/feedback')} className="btn-secondary">
+            View Feedback
+          </button>
+          <button onClick={() => navigate('/create')} className="btn-primary">
+            + Create New Outfit
+          </button>
+        </div>
       </header>
 
       {outfits.length === 0 ? (
