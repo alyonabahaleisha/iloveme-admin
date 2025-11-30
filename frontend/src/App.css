@@ -986,6 +986,11 @@ body {
   color: #721c24;
 }
 
+.category-badge.category-sport {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
 /* Image Upload */
 .upload-container {
   margin-top: 8px;

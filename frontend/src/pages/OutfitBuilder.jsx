@@ -22,7 +22,7 @@ const OutfitBuilder = () => {
   const [exporting, setExporting] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const CATEGORIES = ['Casual', 'Work', 'Evening', 'Date Night'];
+  const CATEGORIES = ['Casual', 'Work', 'Evening', 'Date Night', 'Sport'];
 
   // Load existing outfit data when editing
   useEffect(() => {

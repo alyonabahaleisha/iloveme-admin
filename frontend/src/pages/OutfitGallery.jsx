@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../config/api';
 
-const CATEGORIES = ['All', 'Casual', 'Work', 'Evening', 'Date Night'];
+const CATEGORIES = ['All', 'Casual', 'Work', 'Evening', 'Date Night', 'Sport'];
 
 const OutfitGallery = () => {
   const navigate = useNavigate();
