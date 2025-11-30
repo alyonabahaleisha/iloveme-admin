@@ -196,7 +196,7 @@ const OutfitGallery = () => {
                     {outfit.is_published ? '◯ Unpublish' : '✓ Publish'}
                   </button>
                   <button
-                    onClick={() => navigate(`/edit/${outfit.id}`)}
+                    onClick={() => window.open(`/edit/${outfit.id}`, '_blank')}
                     className="btn-secondary btn-small"
                   >
                     Edit
