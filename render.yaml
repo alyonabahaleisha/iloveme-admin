@@ -1,5 +1,5 @@
 services:
-  # Backend API Service (Node.js + Express)
+  # UAT Backend API Service (Node.js + Express)
   - type: web
     name: ilovme-admin-backend
     runtime: node
@@ -13,26 +13,6 @@ services:
       - key: PORT
         value: 5000
       - key: NODE_ENV
-        value: production
-      - key: BG_REMOVAL_SERVICE_URL
-        value: https://ilovme-admin-bg-removal.onrender.com
-    healthCheckPath: /health
-    autoDeploy: true
-
-  # Background Removal Service (Python + Flask)
-  - type: web
-    name: ilovme-admin-bg-removal
-    runtime: python
-    region: oregon
-    plan: free
-    branch: main
-    rootDir: backend
-    buildCommand: pip install -r requirements.txt
-    startCommand: python3 bg_removal_service.py
-    envVars:
-      - key: PORT
-        value: 5001
-      - key: FLASK_ENV
         value: production
     healthCheckPath: /health
     autoDeploy: true

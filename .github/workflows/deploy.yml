@@ -2,12 +2,16 @@ name: Deploy Admin Panel
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main        # UAT deployment
+      - production  # PROD deployment
 
 jobs:
-  deploy:
-    name: Deploy Frontend & Backend
+  deploy-uat:
+    name: Deploy to UAT
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: uat
     steps:
       - uses: actions/checkout@v3
 
@@ -22,16 +26,15 @@ jobs:
         working-directory: ./frontend
         run: npm ci
 
-      - name: Build frontend
+      - name: Build frontend (UAT)
         working-directory: ./frontend
         run: npm run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
-          VITE_BG_REMOVAL_URL: ${{ secrets.VITE_BG_REMOVAL_URL }}
 
-      - name: Deploy Frontend to Vercel
+      - name: Deploy Frontend to Vercel (UAT)
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -40,10 +43,46 @@ jobs:
           vercel-args: '--prod'
           working-directory: ./frontend
 
-      - name: Trigger Render Backend Deployment
+      - name: Trigger Render Backend Deployment (UAT)
         run: |
           curl -X POST "${{ secrets.RENDER_BACKEND_DEPLOY_HOOK_URL }}"
 
-      - name: Trigger Render BG Removal Service Deployment
+  deploy-prod:
+    name: Deploy to PRODUCTION
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/production'
+    environment: production
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Build frontend (PROD)
+        working-directory: ./frontend
+        run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL_PROD }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY_PROD }}
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL_PROD }}
+
+      - name: Deploy Frontend to Vercel (PROD)
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_PROD }}
+          vercel-args: '--prod'
+          working-directory: ./frontend
+
+      - name: Trigger Render Backend Deployment (PROD)
         run: |
-          curl -X POST "${{ secrets.RENDER_BG_REMOVAL_DEPLOY_HOOK_URL }}"
+          curl -X POST "${{ secrets.RENDER_BACKEND_DEPLOY_HOOK_URL_PROD }}"
