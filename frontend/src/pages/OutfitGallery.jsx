@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../config/api';
 
+const CATEGORIES = ['All', 'Casual', 'Work', 'Evening', 'Date Night'];
+
 const OutfitGallery = () => {
   const navigate = useNavigate();
   const [outfits, setOutfits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filterCategory, setFilterCategory] = useState('All');
 
   useEffect(() => {
     fetchOutfits();
@@ -80,12 +83,16 @@ const OutfitGallery = () => {
     );
   }
 
+  const filteredOutfits = filterCategory === 'All'
+    ? outfits
+    : outfits.filter(outfit => outfit.category === filterCategory);
+
   return (
     <div className="gallery-container">
       <header className="gallery-header">
         <div>
           <h1>Outfit Gallery</h1>
-          <p className="subtitle">{outfits.length} outfit{outfits.length !== 1 ? 's' : ''} created</p>
+          <p className="subtitle">{filteredOutfits.length} outfit{filteredOutfits.length !== 1 ? 's' : ''} {filterCategory !== 'All' ? `in ${filterCategory}` : 'created'}</p>
         </div>
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
           <button onClick={() => navigate('/feedback')} className="btn-secondary">
@@ -97,17 +104,29 @@ const OutfitGallery = () => {
         </div>
       </header>
 
-      {outfits.length === 0 ? (
+      <div className="category-filter">
+        {CATEGORIES.map((cat) => (
+          <button
+            key={cat}
+            className={`filter-btn ${filterCategory === cat ? 'active' : ''}`}
+            onClick={() => setFilterCategory(cat)}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {filteredOutfits.length === 0 ? (
         <div className="empty-state">
-          <h2>No outfits yet</h2>
-          <p>Start creating your first outfit!</p>
+          <h2>{filterCategory === 'All' ? 'No outfits yet' : `No ${filterCategory} outfits`}</h2>
+          <p>{filterCategory === 'All' ? 'Start creating your first outfit!' : 'Try selecting a different category or create a new outfit.'}</p>
           <button onClick={() => navigate('/create')} className="btn-primary">
             Create Outfit
           </button>
         </div>
       ) : (
         <div className="outfit-grid">
-          {outfits.map((outfit) => (
+          {filteredOutfits.map((outfit) => (
             <div key={outfit.id} className="outfit-card">
               <div className="outfit-image">
                 {outfit.combined_image_url ? (
@@ -124,7 +143,9 @@ const OutfitGallery = () => {
                 )}
 
                 <div className="outfit-meta">
-                  <span className="template-badge">{outfit.template_type}</span>
+                  <span className={`category-badge category-${(outfit.category || 'casual').toLowerCase().replace(' ', '-')}`}>
+                    {outfit.category || 'Casual'}
+                  </span>
                   <span className={`gender-badge ${outfit.gender === 'man' ? 'gender-man' : 'gender-woman'}`}>
                     {outfit.gender === 'man' ? '♂ Man' : '♀ Woman'}
                   </span>

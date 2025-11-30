@@ -16,10 +16,13 @@ const OutfitBuilder = () => {
   const [outfitName, setOutfitName] = useState('');
   const [outfitDescription, setOutfitDescription] = useState('');
   const [gender, setGender] = useState('woman');
+  const [category, setCategory] = useState('Casual');
   const [canvasData, setCanvasData] = useState({ products: [] });
   const [saving, setSaving] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const CATEGORIES = ['Casual', 'Work', 'Evening', 'Date Night'];
 
   // Load existing outfit data when editing
   useEffect(() => {
@@ -38,6 +41,7 @@ const OutfitBuilder = () => {
       setOutfitDescription(outfit.description || '');
       setTemplate(outfit.template_type || 'full_outfit');
       setGender(outfit.gender || 'woman');
+      setCategory(outfit.category || 'Casual');
 
       // Transform products from database format to component format
       const loadedProducts = outfit.products.map(p => ({
@@ -225,6 +229,7 @@ const OutfitBuilder = () => {
         canvas_width: CANVAS_WIDTH,
         canvas_height: CANVAS_HEIGHT,
         gender: gender,
+        category: category,
         products: mergedProducts,
       };
 
@@ -316,6 +321,23 @@ const OutfitBuilder = () => {
                 >
                   Man
                 </button>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>Category</label>
+              <div className="category-switch">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat}
+                    type="button"
+                    className={`category-option ${category === cat ? 'active' : ''}`}
+                    onClick={() => setCategory(cat)}
+                    disabled={saving}
+                  >
+                    {cat}
+                  </button>
+                ))}
               </div>
             </div>
           </div>

@@ -66,6 +66,7 @@ router.post('/', async (req, res) => {
       canvas_width,
       canvas_height,
       gender,
+      category,
       products
     } = req.body;
 
@@ -82,7 +83,8 @@ router.post('/', async (req, res) => {
         combined_image_url,
         canvas_width,
         canvas_height,
-        gender: gender || 'woman'
+        gender: gender || 'woman',
+        category: category || 'Casual'
       }])
       .select()
       .single();
@@ -133,6 +135,7 @@ router.put('/:id', async (req, res) => {
       canvas_width,
       canvas_height,
       gender,
+      category,
       products
     } = req.body;
 
@@ -149,7 +152,8 @@ router.put('/:id', async (req, res) => {
         combined_image_url,
         canvas_width,
         canvas_height,
-        gender: gender || 'woman'
+        gender: gender || 'woman',
+        category: category || 'Casual'
       })
       .eq('id', id)
       .select()

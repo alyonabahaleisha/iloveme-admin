@@ -315,6 +315,50 @@ body {
   }
 }
 
+/* Category Filter */
+.category-filter {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .category-filter {
+    margin-bottom: 32px;
+  }
+}
+
+.filter-btn {
+  padding: 10px 18px;
+  border: 2px solid #ddd;
+  background: white;
+  color: #666;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+@media (min-width: 768px) {
+  .filter-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+.filter-btn:hover {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.filter-btn.active {
+  background: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
 .empty-state {
   text-align: center;
   padding: 60px 20px;
@@ -862,6 +906,84 @@ body {
 .gender-option:disabled {
   cursor: not-allowed;
   opacity: 0.6;
+}
+
+/* Category Switch */
+.category-switch {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.category-option {
+  flex: 1;
+  min-width: calc(50% - 4px);
+  padding: 12px 16px;
+  border: 2px solid #ddd;
+  background: white;
+  color: #666;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 44px;
+}
+
+@media (min-width: 768px) {
+  .category-option {
+    padding: 10px 16px;
+    font-size: 13px;
+    min-height: auto;
+  }
+}
+
+.category-option:hover:not(:disabled) {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.category-option.active {
+  background: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+.category-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Category Badge */
+.category-badge {
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: #fff3cd;
+  color: #856404;
+}
+
+.category-badge.category-casual {
+  background: #d4edda;
+  color: #155724;
+}
+
+.category-badge.category-work {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.category-badge.category-evening {
+  background: #e2d5f1;
+  color: #563d7c;
+}
+
+.category-badge.category-date-night {
+  background: #f8d7da;
+  color: #721c24;
 }
 
 /* Image Upload */
