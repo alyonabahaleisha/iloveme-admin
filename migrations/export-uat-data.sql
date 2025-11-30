@@ -1,40 +1,37 @@
 -- =============================================
--- EXPORT DATA FROM UAT SUPABASE
+-- EXPORT OUTFITS & PRODUCTS FROM UAT
 -- Run this on UAT Supabase SQL Editor
--- Copy the results and run on PROD
+-- Copy results and run on PROD Supabase
 -- =============================================
 
--- This generates INSERT statements for your data
--- Run each section and copy the output
-
--- SECTION 1: Export outfits
+-- Step 1: Export all outfits (with gender, category, is_published)
 SELECT
   'INSERT INTO outfits (id, name, description, template_type, combined_image_url, canvas_width, canvas_height, gender, category, is_published, created_at, updated_at) VALUES (' ||
-  quote_literal(id) || ', ' ||
-  quote_literal(name) || ', ' ||
-  COALESCE(quote_literal(description), 'NULL') || ', ' ||
-  quote_literal(template_type) || ', ' ||
-  COALESCE(quote_literal(combined_image_url), 'NULL') || ', ' ||
+  '''' || id || ''', ' ||
+  '''' || REPLACE(name, '''', '''''') || ''', ' ||
+  COALESCE('''' || REPLACE(description, '''', '''''') || '''', 'NULL') || ', ' ||
+  '''' || template_type || ''', ' ||
+  COALESCE('''' || combined_image_url || '''', 'NULL') || ', ' ||
   canvas_width || ', ' ||
   canvas_height || ', ' ||
-  quote_literal(COALESCE(gender, 'woman')) || ', ' ||
-  quote_literal(COALESCE(category, 'Casual')) || ', ' ||
-  is_published || ', ' ||
-  quote_literal(created_at) || ', ' ||
-  quote_literal(updated_at) || ');'
-AS insert_statement
-FROM outfits;
+  '''' || COALESCE(gender, 'woman') || ''', ' ||
+  '''' || COALESCE(category, 'Casual') || ''', ' ||
+  COALESCE(is_published::text, 'false') || ', ' ||
+  '''' || created_at || ''', ' ||
+  '''' || updated_at || ''');' AS sql
+FROM outfits
+ORDER BY created_at;
 
--- SECTION 2: Export products
+-- Step 2: Export all products
 SELECT
   'INSERT INTO products (id, outfit_id, product_name, product_link, original_image_url, processed_image_url, category, position_x, position_y, scale_x, scale_y, rotation, width, height, z_index, created_at) VALUES (' ||
-  quote_literal(id) || ', ' ||
-  quote_literal(outfit_id) || ', ' ||
-  COALESCE(quote_literal(product_name), 'NULL') || ', ' ||
-  COALESCE(quote_literal(product_link), 'NULL') || ', ' ||
-  COALESCE(quote_literal(original_image_url), 'NULL') || ', ' ||
-  quote_literal(processed_image_url) || ', ' ||
-  COALESCE(quote_literal(category), 'NULL') || ', ' ||
+  '''' || id || ''', ' ||
+  '''' || outfit_id || ''', ' ||
+  COALESCE('''' || REPLACE(product_name, '''', '''''') || '''', 'NULL') || ', ' ||
+  COALESCE('''' || product_link || '''', 'NULL') || ', ' ||
+  COALESCE('''' || original_image_url || '''', 'NULL') || ', ' ||
+  '''' || processed_image_url || ''', ' ||
+  COALESCE('''' || category || '''', 'NULL') || ', ' ||
   position_x || ', ' ||
   position_y || ', ' ||
   scale_x || ', ' ||
@@ -43,17 +40,6 @@ SELECT
   COALESCE(width::text, 'NULL') || ', ' ||
   COALESCE(height::text, 'NULL') || ', ' ||
   z_index || ', ' ||
-  quote_literal(created_at) || ');'
-AS insert_statement
-FROM products;
-
--- SECTION 3: Export feedback (optional)
-SELECT
-  'INSERT INTO feedback (id, user_id, user_email, message, created_at) VALUES (' ||
-  quote_literal(id) || ', ' ||
-  COALESCE(quote_literal(user_id), 'NULL') || ', ' ||
-  COALESCE(quote_literal(user_email), 'NULL') || ', ' ||
-  quote_literal(message) || ', ' ||
-  quote_literal(created_at) || ');'
-AS insert_statement
-FROM feedback;
+  '''' || created_at || ''');' AS sql
+FROM products
+ORDER BY created_at;
