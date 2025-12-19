@@ -161,30 +161,28 @@ const OutfitGallery = () => {
 
                 <div className="outfit-products">
                   {outfit.products?.slice(0, 3).map((product, index) => (
-                    <div key={index} className="product-thumbnail">
-                      <img src={product.processed_image_url} alt={product.product_name} />
-                    </div>
+                    product.product_link ? (
+                      <a
+                        key={index}
+                        href={product.product_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="product-thumbnail clickable"
+                        title={product.product_name}
+                      >
+                        <img src={product.processed_image_url} alt={product.product_name} />
+                      </a>
+                    ) : (
+                      <div key={index} className="product-thumbnail">
+                        <img src={product.processed_image_url} alt={product.product_name} />
+                      </div>
+                    )
                   ))}
                   {outfit.products?.length > 3 && (
                     <div className="more-products">
                       +{outfit.products.length - 3}
                     </div>
                   )}
-                </div>
-
-                <div className="outfit-links">
-                  {outfit.products?.filter(p => p.product_link).map((product, index) => (
-                    <a
-                      key={index}
-                      href={product.product_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="product-link"
-                      title={product.product_name}
-                    >
-                      {product.product_name || `Product ${index + 1}`}
-                    </a>
-                  ))}
                 </div>
 
                 <div className="outfit-actions">

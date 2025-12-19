@@ -579,6 +579,17 @@ body {
   border-radius: 8px;
   overflow: hidden;
   border: 2px solid #eee;
+  display: block;
+}
+
+.product-thumbnail.clickable {
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.product-thumbnail.clickable:hover {
+  transform: scale(1.08);
+  border-color: #007bff;
 }
 
 .product-thumbnail img {
@@ -599,30 +610,6 @@ body {
   font-size: 14px;
   font-weight: 600;
   border: 2px solid #eee;
-}
-
-.outfit-links {
-  margin-bottom: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-}
-
-.product-link {
-  color: #007bff;
-  text-decoration: none;
-  font-size: 13px;
-  transition: color 0.2s;
-  padding: 4px 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.product-link:hover {
-  color: #0056b3;
-  text-decoration: underline;
 }
 
 .outfit-actions {
