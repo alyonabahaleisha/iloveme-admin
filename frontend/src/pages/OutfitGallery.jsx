@@ -160,7 +160,7 @@ const OutfitGallery = () => {
                 </div>
 
                 <div className="outfit-products">
-                  {outfit.products?.slice(0, 3).map((product, index) => (
+                  {outfit.products?.map((product, index) => (
                     product.product_link ? (
                       <a
                         key={index}
@@ -178,11 +178,6 @@ const OutfitGallery = () => {
                       </div>
                     )
                   ))}
-                  {outfit.products?.length > 3 && (
-                    <div className="more-products">
-                      +{outfit.products.length - 3}
-                    </div>
-                  )}
                 </div>
 
                 <div className="outfit-actions">
