@@ -10,6 +10,8 @@ const OutfitGallery = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filterCategory, setFilterCategory] = useState('All');
+  const [editingId, setEditingId] = useState(null);
+  const [editDescription, setEditDescription] = useState('');
 
   useEffect(() => {
     fetchOutfits();
@@ -57,6 +59,31 @@ const OutfitGallery = () => {
       console.error('Error toggling publish status:', err);
       alert('Failed to toggle publish status: ' + err.message);
     }
+  };
+
+  const handleEditDescription = (outfit) => {
+    setEditingId(outfit.id);
+    setEditDescription(outfit.description || '');
+  };
+
+  const handleSaveDescription = async (id) => {
+    try {
+      const outfit = outfits.find(o => o.id === id);
+      await api.updateOutfit(id, { ...outfit, description: editDescription });
+
+      setOutfits(outfits.map(o =>
+        o.id === id ? { ...o, description: editDescription } : o
+      ));
+      setEditingId(null);
+    } catch (err) {
+      console.error('Error updating description:', err);
+      alert('Failed to update description: ' + err.message);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setEditDescription('');
   };
 
   if (loading) {
@@ -138,8 +165,31 @@ const OutfitGallery = () => {
 
               <div className="outfit-content">
                 <h3>{outfit.name}</h3>
-                {outfit.description && (
-                  <p className="description">{outfit.description}</p>
+                {editingId === outfit.id ? (
+                  <div className="description-edit">
+                    <textarea
+                      value={editDescription}
+                      onChange={(e) => setEditDescription(e.target.value)}
+                      placeholder="Add description..."
+                      rows={3}
+                    />
+                    <div className="description-edit-actions">
+                      <button onClick={() => handleSaveDescription(outfit.id)} className="btn-primary btn-small">
+                        Save
+                      </button>
+                      <button onClick={handleCancelEdit} className="btn-secondary btn-small">
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <p
+                    className="description editable"
+                    onClick={() => handleEditDescription(outfit)}
+                    title="Click to edit description"
+                  >
+                    {outfit.description || 'Add description...'}
+                  </p>
                 )}
 
                 <div className="outfit-meta">

@@ -520,6 +520,44 @@ body {
   -webkit-box-orient: vertical;
 }
 
+.description.editable {
+  cursor: pointer;
+  padding: 6px 8px;
+  margin: -6px -8px 12px -8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.description.editable:hover {
+  background: #f5f5f5;
+}
+
+.description-edit {
+  margin-bottom: 12px;
+}
+
+.description-edit textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 60px;
+}
+
+.description-edit textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.description-edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
 .outfit-meta {
   display: flex;
   gap: 8px;
